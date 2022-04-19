@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liao Cheng-Yang's Three.js Example</title>
+    <style>
+        body { margin: 0; }
+    </style>
+</head>
+<body>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script>
+        //creating the scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );
+
+        //create a cylinder
+        //CylinderGeometry(radiusTop : Float, radiusBottom : Float, height : Float, radialSegments : Integer, heightSegments : Integer, openEnded : Boolean, thetaStart : Float, thetaLength : Float)
+        const geometry = new THREE.CylinderGeometry( 0, 2, 2, 3, 1 );
+        const texture = new THREE.TextureLoader().load('texture/cloud.png')
+        const material = new THREE.MeshBasicMaterial( {map: texture} );
+        const cylinder = new THREE.Mesh( geometry, material );
+        scene.add( cylinder );
+
+        camera.position.z = 5;
+
+        //rendering the scene
+        function animate() {
+            requestAnimationFrame( animate );
+
+            //Animating the cylinder
+            cylinder.rotation.x += 0.01;
+            cylinder.rotation.y += 0.01;
+            cylinder.rotation.z += 0.01;
+
+            renderer.render( scene, camera );
+        };
+
+        animate();
+    </script>
+</body>
+</html>
